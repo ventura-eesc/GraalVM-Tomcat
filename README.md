@@ -36,6 +36,28 @@ The "Standard JVM" location is /Library/Java/JavaVirtualMachines/
 ```
 # Configure the Environement
 
+
+```bash
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-ee-1.0.0-rc16/Contents/Home
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+## Download Tomcat
+
+```bash
+git clone https://github.com/apache/tomcat
+cd tomcat/res/tomcat-maven
+```
+
+Build tomcat, maven is required,.
+
+```bash
+mvn clean package
+```
+
+
+## ATTIC
+
 ```bash
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-ee-1.0.0-rc16/Contents/Home
 export JAVA_OPTS=-agentlib:native-image-agent=config-output-dir=./target/
