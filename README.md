@@ -88,6 +88,13 @@ $JAVA_HOME/bin/native-image -H:+ReportUnsupportedElementsAtRuntime -H:Configurat
 
 This will create an executable file like this: tomcat-maven-1.0
 
+```bash
+cd tomcat
+
+./tomcat-maven-1.0
+
+```
+
 
 
 
