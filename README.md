@@ -20,3 +20,26 @@ GraalVM native-image tool compatibility
 * [Downloading](https://github.com/oracle/graal/releases)
 * [The Github Project](https://github.com/oracle/graal)
 * [GraalVM Enterprise Edition - Oracle Labs GraalVM](https://www.oracle.com/technetwork/oracle-labs/program-languages/downloads/index.html)
+
+
+## Download and install
+
+Download from [GraalVM Enterprise Edition - Oracle Labs GraalVM](https://www.oracle.com/technetwork/oracle-labs/program-languages/downloads/index.html).
+The "Standard JVM" location is /Library/Java/JavaVirtualMachines/
+
+```bash
+
+  tar xfvo graalvm-ee-1.0.0-rc16-macos-amd64.tar.gz 
+
+  sudo mv graalvm-ee-1.0.0-rc16 /Library/Java/JavaVirtualMachines/
+
+```
+# Configure the Environement
+
+```bash
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-ee-1.0.0-rc16/Contents/Home
+export JAVA_OPTS=-agentlib:native-image-agent=config-output-dir=./target/
+java -jar ./target/tomcat-maven-1.0.jar
+cd target
+$JAVA_HOME/bin/native-image -H:+ReportUnsupportedElementsAtRuntime -H:ConfigurationFileDirectories=./ -jar tomcat-maven-1.0.jar
+```
