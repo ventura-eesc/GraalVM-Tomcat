@@ -55,8 +55,57 @@ Build tomcat, maven is required,.
 mvn clean package
 ```
 
+## Running Tomcat
+
+Edit the tomcat/conf/tomcat-users.xml to have access to some of the default tomcat apps
+
+```xml
+  <role rolename="manager-gui"/>
+  <user username="tomcat" password="tomcat" roles="manager-gui,admin-gui"/>
+```
+
+```bash
+cd tomcat
+export JAVA_HOME=/home/remm/Work/graalvm-ce-1.0.0-rc17
+# export JAVA_OPTS=-agentlib:native-image-agent=config-output-dir=./target/
+
+$JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=./target/ -jar res/tomcat-maven/target/tomcat-maven-1.0.jar 
+
+# This to not over wrote the target files for each execution
+# $JAVA_HOME/bin/java -agentlib:native-image-agent=config-merge-dir=./target/ -jar res/tomcat-maven/target/tomcat-maven-1.0.jar 
+
+
+```
+
+Execute the agent to builld the executable file
+
+```bash
+cd tomcat
+$JAVA_HOME/bin/native-image -H:+ReportUnsupportedElementsAtRuntime -H:ConfigurationFileDirectories=./target/ -jar res/tomcat-maven/target/tomcat-maven-1.0.jar
+
+
+```
+
+This will create an executable file like this: tomcat-maven-1.0
+
+
+
 
 ## ATTIC
+
+java -Dcatalina.base=. -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.util.logging.config.file=conf/logging.properties -jar target/tomcat-maven-1.0.jar --war myrootwebapp
+
+java -Dcatalina.base=. -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.util.logging.config.file=conf/logging.properties -jar target/tomcat-maven-1.0.jar --war myrootwebapp --path /path1 --war mywebapp1 --path /path2 --war mywebapp2
+
+
+export JAVA_HOME=/home/remm/Work/graalvm-ce-1.0.0-rc17
+export JAVA_OPTS=-agentlib:native-image-agent=config-output-dir=./target/
+java -jar ./target/tomcat-maven-1.0.jar
+
+
+cd target
+$JAVA_HOME/bin/native-image -H:+ReportUnsupportedElementsAtRuntime -H:ConfigurationFileDirectories=./ -jar tomcat-maven-1.0.jar
+
 
 ```bash
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-ee-1.0.0-rc16/Contents/Home
