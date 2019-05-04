@@ -77,6 +77,8 @@ $JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=./target/ -ja
 
 ```
 
+-Djava.endorsed.lib=$JAVA_HOME/lib/endorsed
+
 Execute the agent to builld the executable file
 
 ```bash
@@ -95,6 +97,28 @@ cd tomcat
 
 ```
 
+This is the error we have:
+
+```bash
+Exception in thread "main" javax.xml.parsers.FactoryConfigurationError: Provider com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl not found
+	at javax.xml.parsers.FactoryFinder.newInstance(FactoryFinder.java:200)
+	at javax.xml.parsers.FactoryFinder.newInstance(FactoryFinder.java:152)
+	at javax.xml.parsers.FactoryFinder.find(FactoryFinder.java:277)
+	at javax.xml.parsers.SAXParserFactory.newInstance(SAXParserFactory.java:127)
+	at org.apache.tomcat.util.digester.Digester.getFactory(Digester.java:461)
+	at org.apache.tomcat.util.digester.Digester.getParser(Digester.java:613)
+	at org.apache.tomcat.util.digester.Digester.getXMLReader(Digester.java:785)
+	at org.apache.tomcat.util.digester.Digester.parse(Digester.java:1431)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:566)
+	at org.apache.catalina.startup.Tomcat.init(Tomcat.java:431)
+	at org.apache.catalina.startup.Tomcat.main(Tomcat.java:1396)
+Caused by: java.lang.ClassNotFoundException: com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl
+	at com.oracle.svm.core.hub.ClassForNameSupport.forName(ClassForNameSupport.java:51)
+	at java.lang.Class.forName(DynamicHub.java:1143)
+	at javax.xml.parsers.FactoryFinder.getProviderClass(FactoryFinder.java:124)
+	at javax.xml.parsers.FactoryFinder.newInstance(FactoryFinder.java:188)
+	... 10 more
+```
 
 
 
