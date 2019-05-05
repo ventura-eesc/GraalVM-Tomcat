@@ -120,6 +120,22 @@ Caused by: java.lang.ClassNotFoundException: com.sun.org.apache.xerces.internal.
 	... 10 more
 ```
 
+This is due to missing imports in target/reflect-config.json
+Basically add:
+```
+{
+  "name" : "com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl",
+  "methods" : [{"name": "<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.catalina.LifecycleListener"
+},
+{
+  "name":"org.apache.coyote.UpgradeProtocol"
+},
+```
+And some more. The trace java -agentlib:native-image-agent=trace-output=./trace-file.json show the missing
+ones but you need to add them by hands.
 
 
 ## ATTIC
